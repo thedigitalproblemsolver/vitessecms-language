@@ -81,19 +81,4 @@ class LanguageHelper
 
         return $return;
     }
-
-    public static function parsePlaceholders(string $string): string
-    {
-        $parsed = [];
-
-        preg_match_all("/%([A-Z_]*)%/", $string, $aMatches);
-        foreach ($aMatches[1] as $key => $value) :
-            if (!in_array($value, $parsed)) :
-                $string = str_replace('%' . $value . '%', LanguageHelper::_($value), $string);
-                $parsed[] = $value;
-            endif;
-        endforeach;
-
-        return $string;
-    }
 }
