@@ -16,5 +16,8 @@
     "psr-4": {
       "VitesseCms\\Language\\": "src/"
     }
+  },
+  "require": {
+    "vitessecms/core": "~0.0.1"
   }
 }
