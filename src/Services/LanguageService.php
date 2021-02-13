@@ -26,7 +26,7 @@ class LanguageService extends AbstractInjectableService
         if (!isset($this->translations[$module])) :
             $iniFile = $this->configuration->getTranslationDir() . strtolower($module) . '.ini';
             $accountIniFile = $this->configuration->getAccountTranslationDir() . strtolower($module) . '.ini';
-            $vendorNameAdminIniFile = $this->configuration->getVendorNameDir() . strtolower($module) . '/src/translations/' . $this->configuration->getLanguageLocale() . '/admin.ini';
+            $vendorNameAdminIniFile = $this->configuration->getVendorNameDir() . strtolower($module) . '/src/Translations/' . $this->configuration->getLanguageLocale() . '/admin.ini';
             $this->translations[$module] = null;
 
             $this->addFileToTranslation($module, $iniFile);
