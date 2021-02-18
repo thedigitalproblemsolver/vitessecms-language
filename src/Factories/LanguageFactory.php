@@ -28,7 +28,8 @@ class LanguageFactory
         string $domain,
         string $flagClass = '',
         bool $published = false
-    ): Language {
+    ): Language
+    {
         $language = new Language();
         $language->set('name', $name);
         $language->set('nativeName', $nativeName);

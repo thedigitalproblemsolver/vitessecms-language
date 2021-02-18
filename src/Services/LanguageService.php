@@ -18,6 +18,21 @@ class LanguageService extends AbstractInjectableService
         $this->translations = [];
     }
 
+    public function parsePlaceholders(string $string): string
+    {
+        $parsed = [];
+
+        preg_match_all("/%([A-Z_]*)%/", $string, $aMatches);
+        foreach ($aMatches[1] as $key => $value) :
+            if (!in_array($value, $parsed, true)) :
+                $string = str_replace('%' . $value . '%', $this->get($value), $string);
+                $parsed[] = $value;
+            endif;
+        endforeach;
+
+        return $string;
+    }
+
     public function get(string $key, array $replace = []): string
     {
         $parts = explode('_', $key);
@@ -63,20 +78,5 @@ class LanguageService extends AbstractInjectableService
                 $this->translations[$module]->merge(new Ini($file));
             endif;
         endif;
-    }
-
-    public function parsePlaceholders(string $string): string
-    {
-        $parsed = [];
-
-        preg_match_all("/%([A-Z_]*)%/", $string, $aMatches);
-        foreach ($aMatches[1] as $key => $value) :
-            if (!in_array($value, $parsed, true)) :
-                $string = str_replace('%' . $value . '%', $this->get($value), $string);
-                $parsed[] = $value;
-            endif;
-        endforeach;
-
-        return $string;
     }
 }

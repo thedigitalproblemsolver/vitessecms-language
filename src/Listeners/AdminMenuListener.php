@@ -14,7 +14,7 @@ class AdminMenuListener
         if ($adminMenu->getUser()->getPermissionRole() === 'superadmin') :
             $children = new AdminMenuNavBarChildren();
             $children->addChild('Languages', 'admin/language/adminlanguage/adminList');
-            $adminMenu->addDropdown('System',$children);
+            $adminMenu->addDropdown('System', $children);
         endif;
     }
 }
