@@ -18,6 +18,21 @@ class LanguageService extends AbstractInjectableService
         $this->translations = [];
     }
 
+    public function parsePlaceholders(string $string): string
+    {
+        $parsed = [];
+
+        preg_match_all("/%([A-Z_]*)%/", $string, $aMatches);
+        foreach ($aMatches[1] as $key => $value) :
+            if (!in_array($value, $parsed, true)) :
+                $string = str_replace('%' . $value . '%', $this->get($value), $string);
+                $parsed[] = $value;
+            endif;
+        endforeach;
+
+        return $string;
+    }
+
     public function get(string $key, array $replace = []): string
     {
         $parts = explode('_', $key);
@@ -26,7 +41,7 @@ class LanguageService extends AbstractInjectableService
         if (!isset($this->translations[$module])) :
             $iniFile = $this->configuration->getTranslationDir() . strtolower($module) . '.ini';
             $accountIniFile = $this->configuration->getAccountTranslationDir() . strtolower($module) . '.ini';
-            $vendorNameAdminIniFile = $this->configuration->getVendorNameDir() . strtolower($module) . '/src/translations/' . $this->configuration->getLanguageLocale() . '/admin.ini';
+            $vendorNameAdminIniFile = $this->configuration->getVendorNameDir() . strtolower($module) . '/src/Translations/' . $this->configuration->getLanguageLocale() . '/admin.ini';
             $this->translations[$module] = null;
 
             $this->addFileToTranslation($module, $iniFile);
@@ -63,20 +78,5 @@ class LanguageService extends AbstractInjectableService
                 $this->translations[$module]->merge(new Ini($file));
             endif;
         endif;
-    }
-
-    public function parsePlaceholders(string $string): string
-    {
-        $parsed = [];
-
-        preg_match_all("/%([A-Z_]*)%/", $string, $aMatches);
-        foreach ($aMatches[1] as $key => $value) :
-            if (!in_array($value, $parsed, true)) :
-                $string = str_replace('%' . $value . '%', $this->get($value), $string);
-                $parsed[] = $value;
-            endif;
-        endforeach;
-
-        return $string;
     }
 }

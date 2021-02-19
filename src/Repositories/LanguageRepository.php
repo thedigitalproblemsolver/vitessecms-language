@@ -11,7 +11,8 @@ class LanguageRepository
     public function findAll(
         ?FindValueIterator $findValues = null,
         bool $hideUnpublished = true
-    ): LanguageIterator {
+    ): LanguageIterator
+    {
         Language::setFindPublished($hideUnpublished);
 
         if ($findValues !== null) :
@@ -35,7 +36,7 @@ class LanguageRepository
 
         /** @var Language $language */
         $language = Language::findById($id);
-        if(is_object($language)):
+        if (is_object($language)):
             return $language;
         endif;
 
