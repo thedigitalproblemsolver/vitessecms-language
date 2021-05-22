@@ -2,7 +2,9 @@
 
 namespace VitesseCms\Language\Models;
 
-class LanguageIterator extends \ArrayIterator
+use ArrayIterator;
+
+class LanguageIterator extends ArrayIterator
 {
     public function __construct(array $languages)
     {
