@@ -40,14 +40,22 @@ class LanguageService extends AbstractInjectableService
 
         if (!isset($this->translations[$module])) :
             $iniFile = $this->configuration->getTranslationDir() . strtolower($module) . '.ini';
+            $moduleIniFile = $this->configuration->getVendorNameDir() . strtolower($module) . '/src/Translations/' . $this->configuration->getLanguageLocale() . '.ini';
             $accountIniFile = $this->configuration->getAccountTranslationDir() . strtolower($module) . '.ini';
-            $vendorNameAdminIniFile = $this->configuration->getVendorNameDir() . strtolower($module) . '/src/Translations/' . $this->configuration->getLanguageLocale() . '/admin.ini';
+            $moduleNameAdminIniFile = $this->configuration->getVendorNameDir() . strtolower($module) . '/src/Translations/' . $this->configuration->getLanguageLocale() . '/admin.ini';
             $this->translations[$module] = null;
 
-            $this->addFileToTranslation($module, $iniFile);
-            $this->addFileToTranslation($module, $accountIniFile);
-            if (AdminUtil::isAdminPage()) :
-                $this->addFileToTranslation($module, $vendorNameAdminIniFile);
+            if(is_file($iniFile)) :
+                $this->addFileToTranslation($module, $iniFile);
+            endif;
+            if(is_file($accountIniFile)) :
+                $this->addFileToTranslation($module, $accountIniFile);
+            endif;
+            if(is_file($moduleIniFile)) :
+                $this->addFileToTranslation($module, $moduleIniFile);
+            endif;
+            if (AdminUtil::isAdminPage() && is_file($moduleNameAdminIniFile)) :
+                $this->addFileToTranslation($module, $moduleNameAdminIniFile);
             endif;
         endif;
 
