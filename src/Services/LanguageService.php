@@ -2,20 +2,26 @@
 
 namespace VitesseCms\Language\Services;
 
-use VitesseCms\Admin\Utils\AdminUtil;
-use VitesseCms\Core\Services\AbstractInjectableService;
 use Phalcon\Config\Adapter\Ini;
+use VitesseCms\Admin\Utils\AdminUtil;
+use VitesseCms\Configuration\Services\ConfigService;
 
-class LanguageService extends AbstractInjectableService
+class LanguageService
 {
     /**
      * @var Ini[]
      */
     protected $translations;
 
-    public function __construct()
+    /**
+     * @var ConfigService
+     */
+    protected $configuration;
+
+    public function __construct(ConfigService $configService)
     {
         $this->translations = [];
+        $this->configuration = $configService;
     }
 
     public function parsePlaceholders(string $string): string
@@ -45,13 +51,13 @@ class LanguageService extends AbstractInjectableService
             $moduleNameAdminIniFile = $this->configuration->getVendorNameDir() . strtolower($module) . '/src/Translations/' . $this->configuration->getLanguageLocale() . '/admin.ini';
             $this->translations[$module] = null;
 
-            if(is_file($iniFile)) :
+            if (is_file($iniFile)) :
                 $this->addFileToTranslation($module, $iniFile);
             endif;
-            if(is_file($accountIniFile)) :
+            if (is_file($accountIniFile)) :
                 $this->addFileToTranslation($module, $accountIniFile);
             endif;
-            if(is_file($moduleIniFile)) :
+            if (is_file($moduleIniFile)) :
                 $this->addFileToTranslation($module, $moduleIniFile);
             endif;
             if (AdminUtil::isAdminPage() && is_file($moduleNameAdminIniFile)) :
