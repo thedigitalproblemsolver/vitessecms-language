@@ -5,6 +5,7 @@ namespace VitesseCms\Language\Blocks;
 use VitesseCms\Block\AbstractBlockModel;
 use VitesseCms\Block\Models\Block;
 use VitesseCms\Language\Models\Language;
+use VitesseCms\Language\Repositories\LanguageRepository;
 
 class LanguageSwitch extends AbstractBlockModel
 {
@@ -18,7 +19,7 @@ class LanguageSwitch extends AbstractBlockModel
     public function parse(Block $block): void
     {
         parent::parse($block);
-        $languages = Language::find();
+        $languages = (new LanguageRepository())->findAll();
 
         if ($this->view->hasCurrentItem()) :
             $currentItem = $this->view->getCurrentItem();
