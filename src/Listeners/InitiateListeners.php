@@ -15,6 +15,9 @@ class InitiateListeners implements InitiateListenersInterface
         if ($di->user->hasAdminAccess()) :
             $di->eventsManager->attach('adminMenu', new AdminMenuListener());
         endif;
-        $di->eventsManager->attach(LanguageEnum::SERVICE_LISTENER->value, new LanguageListener(new LanguageRepository()));
+        $di->eventsManager->attach(LanguageEnum::SERVICE_LISTENER->value, new LanguageListener(
+            new LanguageRepository(),
+            $di->language
+        ));
     }
 }
