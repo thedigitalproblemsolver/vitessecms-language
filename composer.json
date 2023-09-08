@@ -20,6 +20,6 @@
   "require": {
     "vitessecms/core": "^1.3.6",
     "vitessecms/form": "^1.1.2",
-    "vitessecms/block": "^1.4.0"
+    "vitessecms/block": "^1.5.0"
   }
 }
