@@ -6,11 +6,13 @@ namespace VitesseCms\Language\Controllers;
 
 use ArrayIterator;
 use stdClass;
+use VitesseCms\Admin\Interfaces\AdminModelAddableInterface;
 use VitesseCms\Admin\Interfaces\AdminModelDeletableInterface;
 use VitesseCms\Admin\Interfaces\AdminModelEditableInterface;
 use VitesseCms\Admin\Interfaces\AdminModelFormInterface;
 use VitesseCms\Admin\Interfaces\AdminModelListInterface;
 use VitesseCms\Admin\Interfaces\AdminModelPublishableInterface;
+use VitesseCms\Admin\Traits\TraitAdminModelAddable;
 use VitesseCms\Admin\Traits\TraitAdminModelDeletable;
 use VitesseCms\Admin\Traits\TraitAdminModelEditable;
 use VitesseCms\Admin\Traits\TraitAdminModelList;
@@ -27,12 +29,14 @@ class AdminlanguageController extends AbstractControllerAdmin implements
     AdminModelListInterface,
     AdminModelDeletableInterface,
     AdminModelPublishableInterface,
-    AdminModelEditableInterface
+    AdminModelEditableInterface,
+    AdminModelAddableInterface
 {
     use TraitAdminModelList;
     use TraitAdminModelDeletable;
     use TraitAdminModelPublishable;
     use TraitAdminModelEditable;
+    use TraitAdminModelAddable;
 
     private LanguageRepository $languageRepository;
 
