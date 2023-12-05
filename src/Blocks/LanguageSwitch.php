@@ -1,25 +1,35 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace VitesseCms\Language\Blocks;
 
+use stdClass;
 use VitesseCms\Block\AbstractBlockModel;
 use VitesseCms\Block\Models\Block;
+use VitesseCms\Language\Enums\LanguageEnum;
 use VitesseCms\Language\Models\Language;
 use VitesseCms\Language\Repositories\LanguageRepository;
 
 class LanguageSwitch extends AbstractBlockModel
 {
+    private LanguageRepository $languageRepository;
+
     public function initialize()
     {
         parent::initialize();
 
         $this->excludeFromCache = true;
+        $this->languageRepository = $this->getDi()->get('eventsManager')->fire(
+            LanguageEnum::GET_REPOSITORY->value,
+            new stdClass()
+        );
     }
 
     public function parse(Block $block): void
     {
         parent::parse($block);
-        $languages = (new LanguageRepository())->findAll();
+        $languages = $this->languageRepository->findAll();
 
         if ($this->view->hasCurrentItem()) :
             $currentItem = $this->view->getCurrentItem();
