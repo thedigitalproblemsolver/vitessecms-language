@@ -22,7 +22,7 @@
     }
   },
   "require": {
-    "vitessecms/core": "^1.7.0",
+    "vitessecms/core": "^1.7.1",
     "vitessecms/form": "^1.4.0",
     "vitessecms/block": "^1.7.0"
   }
