@@ -15,15 +15,15 @@ use VitesseCms\Language\Repositories\LanguageRepository;
 
 class InitiateAdminListeners implements InitiateListenersInterface
 {
-    public static function setListeners(InjectableInterface $di): void
+    public static function setListeners(InjectableInterface $injectable): void
     {
-        $di->eventsManager->attach('adminMenu', new AdminMenuListener());
-        $di->eventsManager->attach(AdminlanguageController::class, new AdminlanguageControllerListener());
-        $di->eventsManager->attach(
+        $injectable->eventsManager->attach('adminMenu', new AdminMenuListener());
+        $injectable->eventsManager->attach(AdminlanguageController::class, new AdminlanguageControllerListener());
+        $injectable->eventsManager->attach(
             LanguageEnum::SERVICE_LISTENER->value,
             new LanguageListener(
                 new LanguageRepository(Language::class),
-                $di->language
+                $injectable->language
             )
         );
     }
